@@ -83,8 +83,9 @@ public class FrameMain extends JFrame {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 try {
-                    int[] SimpleLinkedList = JTableUtils.readIntArrayFromJTable(tableInput);
-                    JTableUtils.writeArrayToJTable(tableOutput, SimpleLinkedList);
+                    int[] list1 = JTableUtils.readIntArrayFromJTable(tableInput);
+//                    Logic.Sort(list1);
+                    JTableUtils.writeArrayToJTable(tableOutput, list1);
                 } catch (Exception e) {
                     SwingUtils.showErrorMessageBox(e);
                 }
