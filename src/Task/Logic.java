@@ -2,41 +2,44 @@ package Task;
 
 public class Logic {
     public static void main(String[] args) throws Exception {
-SimpleLinkedList<Integer> list = new SimpleLinkedList<>();
+        SimpleLinkedList<Integer> list = new SimpleLinkedList<>();
 
-list.addLast(4);
-list.addLast(2);
-list.addLast(9);
-list.addLast(127);
-list.addLast(886);
-list.addLast(886);
-list.addLast(3);
-list.addLast(886);
+        list.addLast(3);
+        list.addLast(4);
+        list.addLast(5);
+        list.addLast(3);
+        list.addLast(100);
 
-        for (int i = 0; i < list.size(); i++) {
-            if (SearchSimple(list.get(i))) {
-                if (i == 0) {
-                    if (SearchSimple(list.get(i + 1)) == false)
-                        list.remove(i + 1);
-                } else if (i == list.size() - 1) {
-                    if (SearchSimple(list.get(i - 1)) == false)
-                        list.remove(i - 1);
-                } else {
-                    if ((SearchSimple(list.get(i - 1)) == false) & (SearchSimple(list.get(i + 1))))
-                        list.remove(i - 1);
-                    else if ((SearchSimple(list.get(i + 1)) == false) & (SearchSimple(list.get(i - 1))))
-                        list.remove(i + 1);
-                    else if ((SearchSimple(list.get(i + 1)) == false) & (SearchSimple(list.get(i - 1))) == false) {
-                        list.remove(i + 1);
-                        list.remove(i - 1);
-                        i--;
+
+        if (list.size() == 1) {
+            for (int value : list) {
+                System.out.print(value);
+            }
+        } else {
+            for (int i = 0; i < list.size(); i++) {
+                if (SearchSimple(list.get(i))) {
+                    if (i == 0) {
+                        if (SearchSimple(list.get(i + 1)) == false)
+                            list.remove(i + 1);
+                    } else if (i == list.size() - 1) {
+                        if (SearchSimple(list.get(i - 1)) == false)
+                            list.remove(i - 1);
+                    } else {
+                        if ((SearchSimple(list.get(i - 1)) == false) & (SearchSimple(list.get(i + 1))))
+                            list.remove(i - 1);
+                        else if ((SearchSimple(list.get(i + 1)) == false) & (SearchSimple(list.get(i - 1))))
+                            list.remove(i + 1);
+                        else if ((SearchSimple(list.get(i + 1)) == false) & (SearchSimple(list.get(i - 1))) == false) {
+                            list.remove(i + 1);
+                            list.remove(i - 1);
+                            i--;
+                        }
                     }
                 }
-
             }
-        }
-        for (int value2 : list) {
-            System.out.print(value2 + " ");
+            for (int value : list) {
+                System.out.print(value + " ");
+            }
         }
     }
 
@@ -56,8 +59,7 @@ list.addLast(886);
         }
         if (checkResult == 0)
             return true;
-        else {
+        else
             return false;
-        }
     }
 }
