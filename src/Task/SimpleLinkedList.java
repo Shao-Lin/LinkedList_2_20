@@ -141,6 +141,80 @@ public class SimpleLinkedList<T> implements Iterable<T> {
         }
         return getNode(index).value;
     }
+    public SimpleLinkedList <String> toLinkedList(String[] string){
+        SimpleLinkedList<String> list = new SimpleLinkedList<>();
+        for (String s : string){
+            list.addLast(s);
+        }
+        return list;
+    }
+    public static SimpleLinkedList<Integer> IntegerArrayToLinkedList(int[] array){
+        SimpleLinkedList<Integer> list = new SimpleLinkedList<>();
+        for (int s : array){
+            list.addLast(s);
+        }
+        return list;
+    }
+    public static String[] toStringArray(SimpleLinkedList<String> list) throws SimpleLinkedListException{
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0;i < list.size();i++){
+            sb.append(i > 0 ? ", " : "").append(list.get(i));
+        }
+        return sb.toString().split(", ");
+    }
+    public static String[] IntegerToStringArray(SimpleLinkedList<Integer> list) throws SimpleLinkedListException{
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0;i < list.size();i++){
+            sb.append(i > 0 ? ", " : "").append(list.get(i));
+        }
+        return sb.toString().split(", ");
+    }
+
+    public static boolean SearchSimple(int a) {
+        int checkResult = 0;
+        if ((a == 2) || (a == 3) || (a == 5) || (a == 7))
+            return true;
+        if (((a % 2 == 0) || (a <= 0) || (a % 10 == 5) || (a == 1)))
+            return false;
+        else {
+            for (int i = 3; i <= Math.sqrt(a); i += 2) {
+                if (a % i == 0) {
+                    checkResult++;
+                    break;
+                }
+            }
+        }
+        return checkResult == 0;
+    }
+
+    public static String sort(SimpleLinkedList<Integer> list) throws SimpleLinkedList.SimpleLinkedListException {
+        if (list.size() == 1)
+            return list.toString();
+        for (int i = 0; i < list.size(); i++) {
+            if (SearchSimple(list.get(i))) {
+                if (i == 0) {
+                    if (!SearchSimple(list.get(i + 1)))
+                        list.remove(i + 1);
+                } else if (i == list.size() - 1) {
+                    if (!SearchSimple(list.get(i - 1)))
+                        list.remove(i - 1);
+                } else {
+                    if ((!SearchSimple(list.get(i - 1))) && (SearchSimple(list.get(i + 1)))){
+                        list.remove(i - 1);
+                        i--;
+                    }
+                    else if ((!SearchSimple(list.get(i + 1))) && (SearchSimple(list.get(i - 1))))
+                        list.remove(i + 1);
+                    else if ((!SearchSimple(list.get(i + 1))) && !(SearchSimple(list.get(i - 1)))) {
+                        list.remove(i + 1);
+                        list.remove(i - 1);
+                        i--;
+                    }
+                }
+            }
+        }
+        return list.toString();
+    }
 
 
     @Override

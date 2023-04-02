@@ -7,10 +7,7 @@ import util.JTableUtils;
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
-import java.util.List;
 
 public class FrameMain extends JFrame {
     private JTable tableInput;
@@ -19,8 +16,8 @@ public class FrameMain extends JFrame {
     private JButton buttonSort;
     private JButton buttonSaveOutputIntoFile;
     private JPanel panelMain;
-    private JFileChooser fileChooserOpen;
-    private JFileChooser fileChooserSave;
+    private final JFileChooser fileChooserOpen;
+    private final JFileChooser fileChooserSave;
 
     public FrameMain() {
         this.setTitle("Task 2");
@@ -45,50 +42,46 @@ public class FrameMain extends JFrame {
         fileChooserSave.setAcceptAllFileFilterUsed(false);
         fileChooserSave.setDialogType(JFileChooser.SAVE_DIALOG);
         fileChooserSave.setApproveButtonText("Save");
+        JTableUtils.writeArrayToJTable(tableInput, new int[]{142, 3, 3, 10, 134});
+        this.pack();
 
 
-        buttonLoadInputFromFile.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                try {
-                    if (fileChooserOpen.showOpenDialog(panelMain) == JFileChooser.APPROVE_OPTION) {
-                        int[] array = ArrayUtils.readIntArrayFromFile(fileChooserOpen.getSelectedFile().getPath());
-                        JTableUtils.writeArrayToJTable(tableInput, array);
-                    }
-                } catch (Exception e) {
-                    SwingUtils.showErrorMessageBox(e);
+        buttonLoadInputFromFile.addActionListener(actionEvent -> {
+            try {
+                if (fileChooserOpen.showOpenDialog(panelMain) == JFileChooser.APPROVE_OPTION) {
+                    int[] array = ArrayUtils.readIntArrayFromFile(fileChooserOpen.getSelectedFile().getPath());
+                    JTableUtils.writeArrayToJTable(tableInput, array);
                 }
+            } catch (Exception e) {
+                SwingUtils.showErrorMessageBox(e);
             }
         });
 
-        buttonSaveOutputIntoFile.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                try {
-                    if (fileChooserSave.showSaveDialog(panelMain) == JFileChooser.APPROVE_OPTION) {
-                        int[] array = JTableUtils.readIntArrayFromJTable(tableOutput);
-                        String file = fileChooserSave.getSelectedFile().getPath();
-                        if (!file.toLowerCase().endsWith(".txt")) {
-                            file += ".txt";
-                        }
-                        ArrayUtils.writeArrayToFile(file, array, null);
+        buttonSaveOutputIntoFile.addActionListener(actionEvent -> {
+            try {
+                if (fileChooserSave.showSaveDialog(panelMain) == JFileChooser.APPROVE_OPTION) {
+                    int[] array = JTableUtils.readIntArrayFromJTable(tableOutput);
+                    String file = fileChooserSave.getSelectedFile().getPath();
+                    if (!file.toLowerCase().endsWith(".txt")) {
+                        file += ".txt";
                     }
-                } catch (Exception e) {
-                    SwingUtils.showErrorMessageBox(e);
+                    ArrayUtils.writeArrayToFile(file, array, null);
                 }
-
+            } catch (Exception e) {
+                SwingUtils.showErrorMessageBox(e);
             }
+
         });
-        buttonSort.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                try {
-                    int[] list1 = JTableUtils.readIntArrayFromJTable(tableInput);
-//                    Logic.Sort(list1);
-                    JTableUtils.writeArrayToJTable(tableOutput, list1);
-                } catch (Exception e) {
-                    SwingUtils.showErrorMessageBox(e);
-                }
+        buttonSort.addActionListener(actionEvent -> {
+            try {
+                int [] list1 = JTableUtils.readIntArrayFromJTable(tableInput);
+                assert list1 != null;
+                SimpleLinkedList<Integer> list = SimpleLinkedList.IntegerArrayToLinkedList(list1);
+                SimpleLinkedList.sort(list);
+                String[] result = SimpleLinkedList.IntegerToStringArray(list);
+                JTableUtils.writeArrayToJTable(tableOutput, result);
+            } catch (Exception e) {
+                SwingUtils.showErrorMessageBox(e);
             }
         });
     }
