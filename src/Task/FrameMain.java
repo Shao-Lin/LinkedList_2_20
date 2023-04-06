@@ -77,7 +77,7 @@ public class FrameMain extends JFrame {
                 int [] list1 = JTableUtils.readIntArrayFromJTable(tableInput);
                 assert list1 != null;
                 SimpleLinkedList<Integer> list = SimpleLinkedList.IntegerArrayToLinkedList(list1);
-                SimpleLinkedList.sort(list);
+                list.removingNonSimpleElements();
                 String[] result = SimpleLinkedList.IntegerToStringArray(list);
                 JTableUtils.writeArrayToJTable(tableOutput, result);
             } catch (Exception e) {

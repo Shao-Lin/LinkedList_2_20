@@ -1,6 +1,5 @@
 package Task;
 
-import static Task.SimpleLinkedList.sort;
 
 public class Logic {
     public static void main(String[] args) throws Exception {
@@ -8,13 +7,15 @@ public class Logic {
 
         list.addLast(3);
         list.addLast(4);
-        list.addLast(5);
-        list.addLast(3);
-        list.addLast(100);
+        list.addLast(4);
+        list.addLast(6);
+        list.addLast(11);
+        list.addLast(436);
+        list.addLast(2);
 
-        sort(list);
 
-        for (Object value : list) {
+        list.removingNonSimpleElements();
+        for (int value : list) {
             System.out.print(value + " ");
         }
     }
