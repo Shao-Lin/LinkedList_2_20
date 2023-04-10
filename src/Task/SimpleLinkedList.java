@@ -184,7 +184,7 @@ public class SimpleLinkedList<T> implements Iterable<T> {
             for (T value : this) {
                 System.out.print(value + " ");
             }
-            System.exit(0);
+           return;
         }
         for (int i = 0; i < this.size(); i++) {
             if (isPrime((Integer) this.get(i))) {
